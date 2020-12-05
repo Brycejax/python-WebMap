@@ -36,7 +36,7 @@ fgp = folium.FeatureGroup(name="Population")
 
 #adding featured groups for states and counties
 fgs = folium.FeatureGroup(name= "States")
-fgc = folium.FeatureGroup(name= "Counties")
+fgc = folium.FeatureGroup(name= "Counties", show= False)
 
 #adding to feature group
 #GeoJson is a special case of json file. It contains a dictionary with keys/values
@@ -48,7 +48,8 @@ style_function= lambda x: {'fillColor':'green' if x['properties']['POP2005'] < 1
 
 fgs.add_child(folium.GeoJson(data=open("states.json","r", encoding= 'utf-8-sig').read()))
 
-#here i had to use a different encoding? reference https://stackoverflow.com/questions/19699367/for-line-in-results-in-unicodedecodeerror-utf-8-codec-cant-decode-byte
+#here i had to use a different encoding? reference:
+#  https://stackoverflow.com/questions/19699367/for-line-in-results-in-unicodedecodeerror-utf-8-codec-cant-decode-byte
 fgc.add_child(folium.GeoJson(data=open("counties.json","r", encoding= 'ISO 8859-1').read()))
 
  #adding layer control (option to toggle what layers we see)
