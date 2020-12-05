@@ -34,6 +34,10 @@ for lt,ln,el in zip(lat,lon, elevation):
 
 fgp = folium.FeatureGroup(name="Population")
 
+#adding featured groups for states and counties
+fgs = folium.FeatureGroup(name= "States")
+fgc = folium.FeatureGroup(name= "Counties")
+
 #adding to feature group
 #GeoJson is a special case of json file. It contains a dictionary with keys/values
 #our file contains the coordinates of different countries and makes them individual polygons
@@ -42,9 +46,17 @@ fgp.add_child(folium.GeoJson(data=open('world.json', 'r', encoding= 'utf-8-sig')
 style_function= lambda x: {'fillColor':'green' if x['properties']['POP2005'] < 10000000
  else 'orange' if 10000000 <= x['properties']['POP2005'] < 20000000 else 'red'}))
 
+fgs.add_child(folium.GeoJson(data=open("states.json","r", encoding= 'utf-8-sig').read()))
+
+#here i had to use a different encoding? reference https://stackoverflow.com/questions/19699367/for-line-in-results-in-unicodedecodeerror-utf-8-codec-cant-decode-byte
+fgc.add_child(folium.GeoJson(data=open("counties.json","r", encoding= 'ISO 8859-1').read()))
+
  #adding layer control (option to toggle what layers we see)
 
 map.add_child(fgv)
 map.add_child(fgp)
+map.add_child(fgs)
+map.add_child(fgc)
+
 map.add_child(folium.LayerControl())
 map.save("Map1.html")
